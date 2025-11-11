@@ -1,10 +1,7 @@
-import express from "express"
-import livrosRouter from "./routes/livros"
+import app from "./server"
 
-const app = express()
-app.use(express.json())
-app.use("/api/livros", livrosRouter)
-
-app.listen(8080, () => {
-  console.log("Servidor rodando na porta 8080")
-})
+if (process.env.NODE_ENV !== "test") {
+  app.listen(8080, () => {
+    console.log("Servidor rodando na porta 8080")
+  })
+}

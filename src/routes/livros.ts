@@ -15,11 +15,11 @@ router.post("/", (req, res) => {
 })
 
 router.delete("/:id", (req, res) => {
-  const id = Number(req.params.id)
-  const index = livros.findIndex((livro) => livro.id === id)
+  const id = parseInt(req.params.id)
+  const index = livros.findIndex(livro => livro.id === id)
 
   if (index === -1) {
-    return res.status(404).json({ mensagem: "Livro não encontrado" })
+    return res.status(404).json({ message: "Livro não encontrado" })
   }
 
   livros.splice(index, 1)
