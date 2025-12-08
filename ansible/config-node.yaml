@@ -1,0 +1,44 @@
+# config-node.yaml
+
+---
+- name: Install and configure Node.js application
+  hosts: app_servers
+  become: true
+  tasks:
+    - name: Atualizar pacotes do sistema
+      apt:
+        update_cache: yes
+        upgrade: yes
+
+    - name: Instalar dependências do Node.js
+      apt:
+        name: nodejs
+        state: present
+
+    - name: Instalar o NPM (Node Package Manager)
+      apt:
+        name: npm
+        state: present
+
+    - name: Clonar o repositório da aplicação
+      git:
+        repo: 'https://github.com/claudiofariias/api-livros.git'
+        dest: /home/ubuntu/api-livros
+        version: main
+
+    - name: Instalar dependências da aplicação
+      npm:
+        path: /home/ubuntu/api-livros
+        state: present
+
+    - name: Iniciar a aplicação Node.js
+      shell: |
+        cd /home/ubuntu/api-livros
+        npm run dev
+      async: 600
+      poll: 0
+
+    - name: Certificar-se de que a aplicação está em execução
+      uri:
+        url: http://localhost:8080/api/livros
+        status_code: 200
