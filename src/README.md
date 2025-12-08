@@ -1,5 +1,7 @@
 # API de Livros em TypeScript
 
+![Docker Image CI](https://img.shields.io/docker/v/claudiofariias/livros-api?label=Version&sort=semver)
+
 ## Requisitos
 - Node.js (>= 18)
 - npm
